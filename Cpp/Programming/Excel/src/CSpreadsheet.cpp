@@ -51,10 +51,6 @@ void CSpreadsheet::copyRect(CPos dst, CPos src, int w, int h) {
     m_expr.copyValues(dst, src, w, h);
 }
 
-unsigned CSpreadsheet::capabilities() {
-    return SPREADSHEET_CYCLIC_DEPS | SPREADSHEET_FILE_IO | SPREADSHEET_SPEED;
-}
-
 std::ostream &operator<<(std::ostream &os, const CSpreadsheet &data) {
     return os << data.m_expr;
 }

@@ -170,7 +170,6 @@ int main() {
     assert(x0.setCell({"B7"}, "=B2+B1+B5"));
     assert(x0.setCell({"A1"}, "=B7"));
     assert(valueMatch(x0.getValue({"B7"}), {}));
-    //custom tests
     oss.clear();
     oss.str("");
     x0.save(oss);
@@ -192,23 +191,21 @@ int main() {
     //CPos testing
     //test if CPos correctly converts column from string to number and the other way around
     CPos xi0("A0");
-    //std::cout << xi0.convertToString() << std::endl;
+    assert(xi0.convertToString() == "A");
     CPos xi0a("z0");
-    //std::cout << xi0a.convertToString() << std::endl;
+    assert(xi0a.convertToString() == "Z");
     CPos xi("AA1");
-    //std::cout << xi << std::endl;
-    //std::cout << "num: " << xi.m_column << std::endl;
+    assert(xi.m_column == 27);
     CPos xi1("BASSrz1");
-    //std::cout << xi1.convertToString() << std::endl;
+    assert(xi1.convertToString() == "BASSRZ");
     CPos xi2("BxA1");
-    //std::cout << xi2.convertToString() << std::endl;
+    assert(xi2.convertToString() == "BXA");
     CPos xi3("BbA1");
-    //std::cout << xi3.convertToString() << std::endl;
+    assert(xi3.convertToString() == "BBA");
     CPos xi4("BA1");
-    //std::cout << xi4.convertToString() << std::endl;
+    assert(xi4.convertToString() == "BA");
     CPos xii("AAAA11");
-    //std::cout << "num: " << xii.m_column << std::endl;
-    //std::cout << xii << std::endl;
-    std::cout << "All Test have passed." << std::endl;
+    assert(xii.m_column == 18279);
+    std::cout << "All Tests have passed." << std::endl;
     return EXIT_SUCCESS;
 }

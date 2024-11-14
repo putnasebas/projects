@@ -174,13 +174,13 @@ std::ostream &operator<<(std::ostream &os, const CBuildExpr &data) {
 const std::map<CPos, std::pair<ASTnode, std::vector<CPos>>> &CBuildExpr::getMap() const { return m_data; }
 
 void CBuildExpr::funcCall(std::string fnName, int paramCount) {
-    //I don't plan to implement, just a way to silence compiler
+    // Implementation planned in the future, for now just silencing compiler
     (void) fnName;
     (void) (paramCount);
 }
 
 void CBuildExpr::valRange(std::string val) {
-    //I don't plan to implement, just a way to silence compiler
+    // Implementation planned in the future, for now just silencing compiler
     (void) val;
 
 }
