@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Customers</title>
+    <link rel="stylesheet" href="/styles/Tables.css">
+</head>
+<body>
+<h1>List of customers</h1>
+<table border="1">
+    <tr>
+        <th>email</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Birth Date</th>
+        <th>Subleases</th>
+    </tr>
+    <tr th:each="customerInList : ${customers}">
+        <td>
+            <a th:href="@{'/rest/api/customer/' + ${customerInList.email}}"
+               th:text="${customerInList.email}"></a>
+        </td>
+        <td>
+            <a th:text="${customerInList.firstName}"></a>
+        </td>
+        <td>
+            <a th:text="${customerInList.lastName}"></a>
+        </td>
+        <td>
+            <a th:text="${customerInList.birthDate}"></a>
+        </td>
+        <td>
+            <a th:each="propertyInList : ${customerInList.idSubleases}"
+               th:href="@{'/rest/api/property/' + ${propertyInList}}"
+               th:utext="${propertyInList} + '<br>'"
+            >
+            </a>
+        </td>
+    </tr>
+</table>
+
+<form th:action="@{'/rest/api/owner'}" method="get">
+    <button> List of owners</button>
+</form>
+
+<form th:action="@{'/rest/api/property'}" method="get">
+    <button> List of properties</button>
+</form>
+
+<h4> Add new Customer</h4>
+
+<form th:action="@{'/rest/api/customer'}" th:href="${newCustomer}" method="post">
+    <div>
+        <label for="email">User Email:</label>
+        <input type="text" id="email" th:field="*{newCustomer.email}" placeholder="Enter email" required/>
+    </div>
+    <div>
+        <label for="firstName"> User name: </label>
+        <input type="text" id="firstName" th:field="*{newCustomer.firstName}" placeholder="Enter first name" required/>
+    </div>
+    <div>
+        <label for="lastName"> Last name:</label>
+        <input type="text" id="lastName" th:field="*{newCustomer.lastName}" placeholder="Enter last name" required/>
+    </div>
+    <div>
+        <label for="birthDate"> Birth date:</label>
+        <input type="date" id="birthDate" th:field="*{newCustomer.birthDate}" required/>
+    </div>
+    <div>
+        <button type="submit">Add</button>
+    </div>
+</form>
+
+<br>
+<div class="delete-container">
+    <strong> Remove customers with age below 18</strong>
+</div>
+
+<form th:action="@{'/rest/api/customer/date'}" method="post">
+    <div>
+        <button class="delete-button" type="submit"> Delete </button>
+    </div>
+</form>
+
+</body>
+</html>

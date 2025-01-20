@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Error Page</title>
+    <link rel="stylesheet" href="/styles/ErrorPage.css">
+</head>
+<body>
+
+<div class="error-container">
+    <strong>
+        Error: <a th:text="${errorMessage}"></a>
+    </strong>
+</div>
+
+<form th:action="@{'/rest/api/customer'}" method="get">
+    <button> List of Customers</button>
+</form>
+
+<form th:action="@{'/rest/api/property'}" method="get">
+    <button> List of Properties</button>
+</form>
+
+<form th:action="@{'/rest/api/owner'}" method="get">
+    <button> List of Owners</button>
+</form>
+
+</body>
+</html>

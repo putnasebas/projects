@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Properties</title>
+    <link rel="stylesheet" href="/styles/Tables.css">
+
+</head>
+<body>
+
+<h1> List of Properties</h1>
+
+<table border="1">
+    <tr>
+        <th> Id</th>
+        <th> Property size</th>
+        <th> Rent price</th>
+        <th> City</th>
+        <th> Street</th>
+        <th> Street number</th>
+    </tr>
+    <tr>
+    <tr th:each="propertyInList : ${properties}">
+        <td>
+            <a th:href="@{'/rest/api/property/' + ${propertyInList.id}}" th:text="${propertyInList.id}"></a>
+        </td>
+        <td>
+            <a th:text="${propertyInList.propertySize}"></a>
+        </td>
+        <td>
+            <a th:text="${propertyInList.rentPrice}"></a>
+        </td>
+        <td>
+            <a th:text="${propertyInList.city}"></a>
+        </td>
+        <td>
+            <a th:text="${propertyInList.street}"></a>
+        </td>
+        <td>
+            <a th:text="${propertyInList.streetNumber}"></a>
+        </td>
+    </tr>
+</table>
+
+
+<form th:action="@{'/rest/api/owner'}" method="get">
+    <button> List of owners</button>
+</form>
+
+<form th:action="@{'/rest/api/customer'}" method="get">
+    <button> List of customers</button>
+</form>
+
+<h4> Add new Property </h4>
+
+<form th:action="@{'/rest/api/property'}" th:href="${newProperty}" method="post">
+    <div>
+        <label for="size"> Owner size: </label>
+        <input type="number" id="size" th:field="*{newProperty.propertySize}" placeholder="Enter property size" required/>
+    </div>
+    <div>
+        <label for="rent"> Rent price: </label>
+        <input type="number" id="rent" th:field="*{newProperty.rentPrice}" placeholder="Enter monthly rent price" required/>
+    </div>
+    <div>
+        <label for="city"> City: </label>
+        <input type="text" id="city" th:field="*{newProperty.city}" placeholder="Enter property's city" required/>
+    </div>
+    <div>
+        <label for="street"> Street: </label>
+        <input type="text" id="street" th:field="*{newProperty.street}" placeholder="Enter property's street" required/>
+    </div>
+    <div>
+        <label for="streetNumber"> Street number: </label>
+        <input type="number" id="streetNumber" th:field="*{newProperty.streetNumber}" placeholder="Enter property's street number" required/>
+    </div>
+    <div>
+        <label for="initOwner"> Property owner: </label>
+        <input type="text" id="initOwner" th:field="*{newProperty.ownersEmails}" placeholder="Enter initial Property owner" required/>
+    </div>
+    <div>
+        <button type="submit">Add</button>
+    </div>
+</form>
+
+<br>
+<div class="intersection-container">
+    <strong> Get Intersection </strong>
+</div>
+
+<form th:action="@{'/rest/api/property/owners/intersection'}" method="get">
+    <div>
+        <label> First Email</label>
+        <input type="text" name="o1" placeholder="Enter first Email" required/>
+    </div>
+    <div>
+        <label> Second Email </label>
+        <input type="text" name="o2" placeholder="Enter second Email" required/>
+    </div>
+    <button> Get Intersection</button>
+</form>
+
+</body>
+</html>

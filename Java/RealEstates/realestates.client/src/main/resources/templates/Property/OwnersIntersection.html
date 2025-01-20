@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Owners Property Intersection</title>
+    <link rel="stylesheet" href="/styles/Intersection.css">
+</head>
+<body>
+
+<div class="intersection-container">
+    <strong>
+        Property Intersection of Owners:
+    </strong>
+</div>
+
+<div class="intersection-container">
+    <strong>
+        <a th:href="@{'/rest/api/owner/' + ${firstOwner}}" th:text="${firstOwner}"></a>
+    </strong>
+</div>
+
+<div class="intersection-container">
+    <strong>
+        <a th:href="@{'/rest/api/owner/' + ${secondOwner}}" th:text="${secondOwner}"></a>
+    </strong>
+</div>
+
+<table border="1">
+    <tr>
+        <th> Id</th>
+        <th> Property size</th>
+        <th> Rent price</th>
+        <th> City</th>
+        <th> Street</th>
+        <th> Street number</th>
+    </tr>
+    <tr th:each="propertyInIntersection : ${intersection}">
+        <td>
+            <a th:href="@{'/rest/api/property/' + ${propertyInIntersection.id}}"
+               th:text="${propertyInIntersection.id}"></a>
+        </td>
+        <td>
+            <a th:text="${propertyInIntersection.propertySize}"></a>
+        </td>
+        <td>
+            <a th:text="${propertyInIntersection.rentPrice}"></a>
+        </td>
+        <td>
+            <a th:text="${propertyInIntersection.city}"></a>
+        </td>
+        <td>
+            <a th:text="${propertyInIntersection.street}"></a>
+        </td>
+        <td>
+            <a th:text="${propertyInIntersection.streetNumber}"></a>
+        </td>
+    </tr>
+</table>
+
+<br>
+<form th:action="'/rest/api/property'" method="get">
+    <button> List of Properties</button>
+</form>
+
+<form th:action="'/rest/api/owner'" method="get">
+    <button> List of Owners</button>
+</form>
+
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Owner Information</title>
+    <link rel="stylesheet" href="/styles/ByIndex.css">
+</head>
+<body>
+<h1> Owner information</h1>
+
+<div>
+    <strong> Email: </strong> <a th:text="${owner.email}"></a>
+</div>
+<div>
+    <strong> Phone Number </strong> <a th:text="${owner.phoneNumber}"></a>
+</div>
+<div>
+    <strong> Owned properties: </strong><a th:each="property : ${owner.ownedPropertiesId}"
+                                           th:href="@{'/rest/api/property/' + ${property}}"
+                                           th:utext="'<br>' + ${property}"> </a>
+</div>
+
+<form th:action="@{'/rest/api/owner'}" method="get">
+    <button> List of owners</button>
+</form>
+
+<br>
+<div class="edit-title-container">
+    <strong> Edit owner data </strong>
+</div>
+
+<form th:action="@{'/rest/api/owner/' + ${owner.email} + '/update'}" method="post">
+    <label>
+        Change Phone number
+        <input type="text" th:field="*{owner.phoneNumber}" minlength="9" maxlength="9" required/>
+        <button> Apply</button>
+    </label>
+</form>
+
+<br>
+<div class="title-container">
+    <strong> Manage Ownership</strong>
+</div>
+
+<table>
+    <tr>
+        <th><strong class="table-class"> Property's ID </strong></th>
+        <th><strong class="table-class"> Action </strong></th>
+    </tr>
+    <tr th:each="property : ${owner.ownedPropertiesId}">
+        <td>
+            <a th:text="${property}" th:href="@{'/rest/api/property/' + ${property}}"></a>
+        </td>
+        <td>
+            <form th:action="@{'/rest/api/owner/' + ${owner.email} + '/properties/' + ${property}}"
+                  th:href="${property}" method="post">
+                <button class="delete-button" type="submit"> Remove ownership</button>
+            </form>
+        </td>
+    </tr>
+</table>
+
+<form th:action="@{'/rest/api/owner/' + ${owner.email} + '/properties'}" method="post">
+    <label>
+        <input type="number" th:field="*{newProperty.id}" placeholder="Add new property's ID" required/>
+    </label>
+    <button type="submit"> Add Property</button>
+</form>
+
+<br>
+<div class="delete-container">
+    <strong> Remove Owner</strong>
+</div>
+
+<form th:action="@{'/rest/api/owner/' + ${owner.email}}" method="post">
+    <button class="delete-button" type="submit"> Delete Owner</button>
+</form>
+
+</body>
+</html>

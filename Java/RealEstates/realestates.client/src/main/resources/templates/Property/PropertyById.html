@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Property info</title>
+    <link rel="stylesheet" href="/styles/ByIndex.css">
+</head>
+<body>
+
+<h1>Property information</h1>
+
+
+<div>
+    <strong> id: </strong> <span th:text="${property.id}"></span>
+</div>
+<div>
+    <strong> Property size: </strong><span th:text="${property.propertySize}+ ' m' + '&#178;'"></span>
+</div>
+<div>
+    <strong> Rent price: </strong><span th:text="${property.rentPrice} + ' czk'"></span>
+</div>
+<div>
+    <strong> City: </strong><span th:text="${property.city}"></span>
+</div>
+<div>
+    <strong> Street: </strong><span th:text="${property.street}"></span>
+</div>
+<div>
+    <strong> Street number: </strong><span th:text="${property.streetNumber}"></span>
+</div>
+<div>
+    <strong> Customer's email: </strong><a th:text="${property.customerEmail}"
+                                           th:href="@{'/rest/api/customer/' + ${property.customerEmail}}"></a>
+</div>
+<div>
+    <strong> Property owner(s): </strong><a th:each="owner : ${property.ownersEmails}"
+                                            th:href="@{'/rest/api/owner/' + ${owner}}"
+                                            th:utext="'<br>' + ${owner}"> </a>
+</div>
+
+<form th:action="@{'/rest/api/property?'}" method="get">
+    <button> List of properties</button>
+</form>
+
+<br>
+
+<div class="edit-title-container">
+    <strong> Edit property </strong>
+</div>
+
+<form th:action="@{'/rest/api/property/' + ${property.id} + '/update'}" th:href="${property}" method="post">
+    <label>
+        Change property's size:
+        <input type="number" th:field="*{property.propertySize}" min="1" placeholder="Change size" required/>
+    </label>
+    <label>
+        Change rent price:
+        <input type="number" th:field="*{property.rentPrice}" min="1" placeholder="Change rent price" required/>
+    </label>
+    <label>
+        Change city:
+        <input type="text" th:field="*{property.city}" placeholder="Change city" required/>
+    </label>
+    <label>
+        Change street:
+        <input type="text" th:field="*{property.street}" placeholder="Change/Add street"/>
+    </label>
+    <label>
+        Change street number:
+        <input type="number" th:field="*{property.streetNumber}" placeholder="Change street number" required/>
+    </label>
+
+    <button type="submit"> Apply</button>
+</form>
+
+<br>
+<div class="title-container">
+    <strong>Manage Ownership</strong>
+</div>
+
+<table>
+    <tr>
+        <th><strong class="table-class"> Owner's email </strong></th>
+        <th><strong class="table-class"> Action </strong></th>
+    </tr>
+    <tr th:each="ownerInList : ${property.ownersEmails}">
+        <td>
+            <a th:text="${ownerInList}" th:href="@{'/rest/api/owner/' + ${ownerInList}}"></a>
+        </td>
+        <td>
+            <form th:action="@{'/rest/api/property/' + ${property.id} + '/owners/' + ${ownerInList}}"
+                  th:href="${property}" method="post">
+                <button class="delete-button" type="submit"> Remove ownership</button>
+            </form>
+        </td>
+    </tr>
+</table>
+
+<br>
+<div class="text-container">
+    <strong>note: deleting last owner results in property deletion</strong>
+</div>
+
+<form th:action="@{'/rest/api/property/' + ${property.id} + '/owners'}" method="post">
+    <label>
+        <input type="text" th:field="*{newOwner.email}" placeholder="Add new owner email" required/>
+    </label>
+    <button type="submit"> Add Owner</button>
+</form>
+
+<br>
+<div class="title-container">
+    <strong> Manage Subleases </strong>
+</div>
+
+<div>
+    <strong> Customer id: </strong> <a th:text="${property.customerEmail}" th:href="@{'/rest/api/customer/' + ${property.customerEmail}}"></a>
+</div>
+
+<form th:action="@{'/rest/api/property/' + ${property.id} + '/customer/add'}" method="post">
+    <label>
+        <input type="text" th:field="*{newCustomer.email}" placeholder="Add/Replace customer's email" required/>
+    </label>
+    <button type="submit"> Add Customer</button>
+</form>
+
+<form th:action="@{'/rest/api/property/' + ${property.id} + '/customer'}" method="post">
+    <button type="submit" class="delete-button"> Remove customer from property</button>
+</form>
+
+<br>
+<div class="delete-container">
+    <strong> Remove Property </strong>
+</div>
+
+<form th:action="@{'/rest/api/property/' + ${property.id}}" method="post">
+    <button type="submit" class="delete-button"> Delete Property</button>
+</form>
+</body>
+</html>

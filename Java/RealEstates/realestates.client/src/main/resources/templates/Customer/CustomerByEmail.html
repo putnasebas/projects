@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Customer info</title>
+    <link rel="stylesheet" href="/styles/ByIndex.css">
+</head>
+<body>
+
+<h1>Customer information</h1>
+
+<div>
+    <strong> Email: </strong> <span th:text="${customer.email}"></span>
+</div>
+<div>
+    <strong> First Name: </strong><span th:text="${customer.firstName}"></span>
+</div>
+<div>
+    <strong> Last Name: </strong><span th:text="${customer.lastName}"></span>
+</div>
+<div>
+    <strong> Birth Date: </strong><span th:text="${customer.birthDate}"></span>
+</div>
+<br>
+
+<form th:action="@{'/rest/api/customer?'}" method="get">
+    <button> List of customers</button>
+</form>
+
+<br>
+<div class="edit-title-container">
+    <strong> Edit customer data </strong>
+</div>
+
+<form th:action="@{'/rest/api/customer/' + ${customer.email} + '/update'}" th:href="${customer}" method="post">
+    <label>
+        Change birthdate:
+        <input type="date" th:field="*{customer.birthDate}" required/>
+    </label>
+    <button type="submit"> Apply</button>
+</form>
+
+<br>
+<div class="delete-container">
+    <strong> Remove Customer </strong>
+</div>
+
+<form th:action="@{'/rest/api/customer/' + ${customer.email}}" method="post">
+    <button type="submit" class="delete-button"> Delete Customer</button>
+</form>
+</body>
+</html>

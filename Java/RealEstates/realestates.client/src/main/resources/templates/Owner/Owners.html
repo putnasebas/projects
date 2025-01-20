@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Property Owners</title>
+    <link rel="stylesheet" href="/styles/Tables.css">
+</head>
+<body>
+
+<h1> List of Property Owners</h1>
+
+<table border="1">
+    <tr>
+        <th> Email</th>
+        <th> Phone number</th>
+    </tr>
+    <tr>
+    <tr th:each="ownerInList : ${owners}">
+        <td>
+            <a th:href="@{'/rest/api/owner/' + ${ownerInList.email}}" th:text="${ownerInList.email}"></a>
+        </td>
+        <td>
+            <a th:text="${ownerInList.phoneNumber}"></a>
+        </td>
+    </tr>
+</table>
+
+<form th:action="@{'/rest/api/property'}" method="get">
+    <button> List of properties</button>
+</form>
+
+<form th:action="@{'/rest/api/customer'}" method="get">
+    <button> List of customers</button>
+</form>
+
+<h4> Add new Owner </h4>
+
+<form th:action="@{'/rest/api/owner'}" th:href="${newOwner}" method="post">
+    <div>
+        <label for="email">Owner Email:</label>
+        <input type="text" id="email" th:field="*{newOwner.email}" placeholder="Enter email" required/>
+    </div>
+    <div>
+        <label for="phoneNumber"> Owner phone number: </label>
+        <input type="text" id="phoneNumber" th:field="*{newOwner.phoneNumber}" placeholder="Enter Phone Number (ideal)"/>
+    </div>
+    <div>
+        <button type="submit"> Add </button>
+    </div>
+</form>
+
+</body>
+</html>
